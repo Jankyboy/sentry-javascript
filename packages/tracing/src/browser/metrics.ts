@@ -138,7 +138,7 @@ export class MetricsInstrumentation {
 
       const timeOrigin = msToSec(browserPerformanceTimeOrigin);
 
-      ['fcp', 'fp', 'lcp', 'ttfb'].forEach(name => {
+      ['fcp', 'fp', 'lcp', 'ttfb'].forEach((name) => {
         if (!this._measurements[name] || timeOrigin >= transaction.startTimestamp) {
           return;
         }
@@ -175,7 +175,7 @@ export class MetricsInstrumentation {
 
   /** Starts tracking the Cumulative Layout Shift on the current page. */
   private _trackCLS(): void {
-    getCLS(metric => {
+    getCLS((metric) => {
       const entry = metric.entries.pop();
 
       if (!entry) {
@@ -229,7 +229,7 @@ export class MetricsInstrumentation {
 
   /** Starts tracking the Largest Contentful Paint on the current page. */
   private _trackLCP(): void {
-    getLCP(metric => {
+    getLCP((metric) => {
       const entry = metric.entries.pop();
 
       if (!entry) {
@@ -246,7 +246,7 @@ export class MetricsInstrumentation {
 
   /** Starts tracking the First Input Delay on the current page. */
   private _trackFID(): void {
-    getFID(metric => {
+    getFID((metric) => {
       const entry = metric.entries.pop();
 
       if (!entry) {
@@ -263,7 +263,7 @@ export class MetricsInstrumentation {
 
   /** Starts tracking the Time to First Byte on the current page. */
   private _trackTTFB(): void {
-    getTTFB(metric => {
+    getTTFB((metric) => {
       const entry = metric.entries.pop();
 
       if (!entry) {

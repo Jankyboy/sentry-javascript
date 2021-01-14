@@ -37,7 +37,7 @@ describe('Hub', () => {
       const transaction = hub.startTransaction({ name: 'dogpark' });
       transaction.sampled = true;
 
-      hub.configureScope(scope => {
+      hub.configureScope((scope) => {
         scope.setSpan(transaction);
       });
 
@@ -48,7 +48,7 @@ describe('Hub', () => {
       const hub = new Hub(new BrowserClient({ tracesSampleRate: 1 }));
       const transaction = hub.startTransaction({ name: 'dogpark', sampled: false });
 
-      hub.configureScope(scope => {
+      hub.configureScope((scope) => {
         scope.setSpan(transaction);
       });
 
@@ -392,7 +392,7 @@ describe('Hub', () => {
         jest.spyOn(hubModule, 'getCurrentHub').mockReturnValue(hub);
 
         const transaction = hub.startTransaction({ name: 'dogpark' });
-        hub.configureScope(scope => {
+        hub.configureScope((scope) => {
           scope.setSpan(transaction);
         });
 
@@ -428,7 +428,7 @@ describe('Hub', () => {
         jest.spyOn(hubModule, 'getCurrentHub').mockReturnValue(hub);
 
         const transaction = hub.startTransaction({ name: 'dogpark', sampled: false });
-        hub.configureScope(scope => {
+        hub.configureScope((scope) => {
           scope.setSpan(transaction);
         });
 

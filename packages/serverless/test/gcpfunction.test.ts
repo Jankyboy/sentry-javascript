@@ -144,7 +144,7 @@ describe('GCPFunction', () => {
     const wrappedHandler = wrapHttpFunction(handler);
     const event: Event = {};
     // @ts-ignore see "Why @ts-ignore" note
-    Sentry.fakeScope.addEventProcessor.mockImplementation(cb => cb(event));
+    Sentry.fakeScope.addEventProcessor.mockImplementation((cb) => cb(event));
     await handleHttp(wrappedHandler);
     expect(event.transaction).toEqual('POST /path');
     expect(event.contexts?.runtime).toEqual({ name: 'node', version: expect.anything() });
@@ -263,7 +263,7 @@ describe('GCPFunction', () => {
     test('successful execution', async () => {
       expect.assertions(5);
 
-      const func: CloudEventFunction = _context => {
+      const func: CloudEventFunction = (_context) => {
         return 42;
       };
       const wrappedHandler = wrapCloudEventFunction(func);
@@ -280,7 +280,7 @@ describe('GCPFunction', () => {
       expect.assertions(6);
 
       const error = new Error('wat');
-      const handler: CloudEventFunction = _context => {
+      const handler: CloudEventFunction = (_context) => {
         throw error;
       };
       const wrappedHandler = wrapCloudEventFunction(handler);
@@ -349,7 +349,7 @@ describe('GCPFunction', () => {
   test('wrapCloudEventFunction scope data', async () => {
     expect.assertions(3);
 
-    const handler: CloudEventFunction = _context => 42;
+    const handler: CloudEventFunction = (_context) => 42;
     const wrappedHandler = wrapCloudEventFunction(handler);
     await handleCloudEvent(wrappedHandler);
     // @ts-ignore see "Why @ts-ignore" note
@@ -379,7 +379,7 @@ describe('GCPFunction', () => {
         },
       };
       // @ts-ignore see "Why @ts-ignore" note
-      Sentry.addGlobalEventProcessor.mockImplementationOnce(cb => cb(eventWithSomeData));
+      Sentry.addGlobalEventProcessor.mockImplementationOnce((cb) => cb(eventWithSomeData));
       Sentry.AWSLambda.init({ defaultIntegrations: [] });
       expect(eventWithSomeData).toEqual({
         exception: {
@@ -418,7 +418,7 @@ describe('GCPFunction', () => {
         },
       };
       // @ts-ignore see "Why @ts-ignore" note
-      Sentry.addGlobalEventProcessor.mockImplementationOnce(cb => cb(eventWithoutAnyData));
+      Sentry.addGlobalEventProcessor.mockImplementationOnce((cb) => cb(eventWithoutAnyData));
       Sentry.AWSLambda.init({ defaultIntegrations: [] });
       expect(eventWithoutAnyData).toEqual({
         exception: {

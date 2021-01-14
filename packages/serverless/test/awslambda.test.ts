@@ -359,7 +359,7 @@ describe('AWSLambda', () => {
         },
       };
       // @ts-ignore see "Why @ts-ignore" note
-      Sentry.addGlobalEventProcessor.mockImplementationOnce(cb => cb(eventWithSomeData));
+      Sentry.addGlobalEventProcessor.mockImplementationOnce((cb) => cb(eventWithSomeData));
       Sentry.AWSLambda.init({ defaultIntegrations: [] });
       expect(eventWithSomeData).toEqual({
         exception: {
@@ -398,7 +398,7 @@ describe('AWSLambda', () => {
         },
       };
       // @ts-ignore see "Why @ts-ignore" note
-      Sentry.addGlobalEventProcessor.mockImplementationOnce(cb => cb(eventWithoutAnyData));
+      Sentry.addGlobalEventProcessor.mockImplementationOnce((cb) => cb(eventWithoutAnyData));
       Sentry.AWSLambda.init({ defaultIntegrations: [] });
       expect(eventWithoutAnyData).toEqual({
         exception: {

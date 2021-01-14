@@ -107,7 +107,7 @@ export class TryCatch implements Integration {
   /** JSDoc */
   private _wrapTimeFunction(original: () => void): () => number {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function(this: any, ...args: any[]): number {
+    return function (this: any, ...args: any[]): number {
       const originalCallback = args[0];
       args[0] = wrap(originalCallback, {
         mechanism: {
@@ -124,7 +124,7 @@ export class TryCatch implements Integration {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _wrapRAF(original: any): (callback: () => void) => any {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function(this: any, callback: () => void): () => void {
+    return function (this: any, callback: () => void): () => void {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       return original.call(
         this,
@@ -154,10 +154,10 @@ export class TryCatch implements Integration {
       return;
     }
 
-    fill(proto, 'addEventListener', function(
+    fill(proto, 'addEventListener', function (
       original: () => void,
     ): (eventName: string, fn: EventListenerObject, options?: boolean | AddEventListenerOptions) => void {
-      return function(
+      return function (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this: any,
         eventName: string,
@@ -202,11 +202,11 @@ export class TryCatch implements Integration {
       };
     });
 
-    fill(proto, 'removeEventListener', function(
+    fill(proto, 'removeEventListener', function (
       originalRemoveEventListener: () => void,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): (this: any, eventName: string, fn: EventListenerObject, options?: boolean | EventListenerOptions) => () => void {
-      return function(
+      return function (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this: any,
         eventName: string,
@@ -247,15 +247,15 @@ export class TryCatch implements Integration {
   /** JSDoc */
   private _wrapXHR(originalSend: () => void): () => void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function(this: XMLHttpRequest, ...args: any[]): void {
+    return function (this: XMLHttpRequest, ...args: any[]): void {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const xhr = this;
       const xmlHttpRequestProps: XMLHttpRequestProp[] = ['onload', 'onerror', 'onprogress', 'onreadystatechange'];
 
-      xmlHttpRequestProps.forEach(prop => {
+      xmlHttpRequestProps.forEach((prop) => {
         if (prop in xhr && typeof xhr[prop] === 'function') {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          fill(xhr, prop, function(original: WrappedFunction): () => any {
+          fill(xhr, prop, function (original: WrappedFunction): () => any {
             const wrapOptions = {
               mechanism: {
                 data: {

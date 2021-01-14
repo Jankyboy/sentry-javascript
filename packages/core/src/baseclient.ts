@@ -103,8 +103,8 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
     this._process(
       this._getBackend()
         .eventFromException(exception, hint)
-        .then(event => this._captureEvent(event, hint, scope))
-        .then(result => {
+        .then((event) => this._captureEvent(event, hint, scope))
+        .then((result) => {
           eventId = result;
         }),
     );
@@ -124,8 +124,8 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
 
     this._process(
       promisedEvent
-        .then(event => this._captureEvent(event, hint, scope))
-        .then(result => {
+        .then((event) => this._captureEvent(event, hint, scope))
+        .then((result) => {
           eventId = result;
         }),
     );
@@ -140,7 +140,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
     let eventId: string | undefined = hint && hint.event_id;
 
     this._process(
-      this._captureEvent(event, hint, scope).then(result => {
+      this._captureEvent(event, hint, scope).then((result) => {
         eventId = result;
       }),
     );
@@ -177,11 +177,11 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
    * @inheritDoc
    */
   public flush(timeout?: number): PromiseLike<boolean> {
-    return this._isClientProcessing(timeout).then(ready => {
+    return this._isClientProcessing(timeout).then((ready) => {
       return this._getBackend()
         .getTransport()
         .close(timeout)
-        .then(transportFlushed => ready && transportFlushed);
+        .then((transportFlushed) => ready && transportFlushed);
     });
   }
 
@@ -189,7 +189,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
    * @inheritDoc
    */
   public close(timeout?: number): PromiseLike<boolean> {
-    return this.flush(timeout).then(result => {
+    return this.flush(timeout).then((result) => {
       this.getOptions().enabled = false;
       return result;
     });
@@ -261,7 +261,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
 
   /** Waits for the client to be done with processing. */
   protected _isClientProcessing(timeout?: number): PromiseLike<boolean> {
-    return new SyncPromise(resolve => {
+    return new SyncPromise((resolve) => {
       let ticked: number = 0;
       const tick: number = 1;
 
@@ -332,7 +332,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
       result = finalScope.applyToEvent(prepared, hint);
     }
 
-    return result.then(evt => {
+    return result.then((evt) => {
       if (typeof normalizeDepth === 'number' && normalizeDepth > 0) {
         return this._normalizeEvent(evt, normalizeDepth);
       }
@@ -358,7 +358,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
     const normalized = {
       ...event,
       ...(event.breadcrumbs && {
-        breadcrumbs: event.breadcrumbs.map(b => ({
+        breadcrumbs: event.breadcrumbs.map((b) => ({
           ...b,
           ...(b.data && {
             data: normalize(b.data, depth),
@@ -454,10 +454,10 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
    */
   protected _captureEvent(event: Event, hint?: EventHint, scope?: Scope): PromiseLike<string | undefined> {
     return this._processEvent(event, hint, scope).then(
-      finalEvent => {
+      (finalEvent) => {
         return finalEvent.event_id;
       },
-      reason => {
+      (reason) => {
         logger.error(reason);
         return undefined;
       },
@@ -498,7 +498,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
     }
 
     return this._prepareEvent(event, scope, hint)
-      .then(prepared => {
+      .then((prepared) => {
         if (prepared === null) {
           throw new SentryError('An event processor returned null, will not send event.');
         }
@@ -513,15 +513,15 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
           throw new SentryError('`beforeSend` method has to return `null` or a valid event.');
         } else if (isThenable(beforeSendResult)) {
           return (beforeSendResult as PromiseLike<Event | null>).then(
-            event => event,
-            e => {
+            (event) => event,
+            (e) => {
               throw new SentryError(`beforeSend rejected with ${e}`);
             },
           );
         }
         return beforeSendResult;
       })
-      .then(processedEvent => {
+      .then((processedEvent) => {
         if (processedEvent === null) {
           throw new SentryError('`beforeSend` returned `null`, will not send event.');
         }
@@ -534,7 +534,7 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
         this._sendEvent(processedEvent);
         return processedEvent;
       })
-      .then(null, reason => {
+      .then(null, (reason) => {
         if (reason instanceof SentryError) {
           throw reason;
         }
@@ -557,11 +557,11 @@ export abstract class BaseClient<B extends Backend, O extends Options> implement
   protected _process<T>(promise: PromiseLike<T>): void {
     this._processing += 1;
     promise.then(
-      value => {
+      (value) => {
         this._processing -= 1;
         return value;
       },
-      reason => {
+      (reason) => {
         this._processing -= 1;
         return reason;
       },

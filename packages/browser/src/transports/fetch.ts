@@ -56,7 +56,7 @@ export class FetchTransport extends BaseTransport {
       new SyncPromise<Response>((resolve, reject) => {
         global
           .fetch(sentryRequest.url, options)
-          .then(response => {
+          .then((response) => {
             const headers = {
               'x-sentry-rate-limits': response.headers.get('X-Sentry-Rate-Limits'),
               'retry-after': response.headers.get('Retry-After'),

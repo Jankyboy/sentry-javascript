@@ -191,7 +191,7 @@ describe('BrowserTracing', () => {
       });
 
       it('can override default context values', () => {
-        const mockBeforeNavigation = jest.fn(ctx => ({
+        const mockBeforeNavigation = jest.fn((ctx) => ({
           ...ctx,
           op: 'not-pageload',
         }));

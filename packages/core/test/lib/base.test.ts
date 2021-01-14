@@ -131,7 +131,7 @@ describe('BaseClient', () => {
 
     test('calls beforeBreadcrumb and adds the breadcrumb without any changes', () => {
       expect.assertions(1);
-      const beforeBreadcrumb = jest.fn(breadcrumb => breadcrumb);
+      const beforeBreadcrumb = jest.fn((breadcrumb) => breadcrumb);
       const client = new TestClient({ beforeBreadcrumb });
       const scope = new Scope();
       const hub = new Hub(client, scope);
@@ -222,7 +222,7 @@ describe('BaseClient', () => {
       client.captureException(
         new Error('test exception'),
         {
-          captureContext: s => {
+          captureContext: (s) => {
             s.clear();
             s.setExtra('bar', 'wat');
             return s;
@@ -671,7 +671,7 @@ describe('BaseClient', () => {
 
     test('calls beforeSend and uses original event without any changes', () => {
       expect.assertions(1);
-      const beforeSend = jest.fn(event => event);
+      const beforeSend = jest.fn((event) => event);
       const client = new TestClient({ dsn: PUBLIC_DSN, beforeSend });
       client.captureEvent({ message: 'hello' });
       expect(TestBackend.instance!.event!.message).toBe('hello');
@@ -712,12 +712,12 @@ describe('BaseClient', () => {
       );
     });
 
-    test('calls async beforeSend and uses original event without any changes', done => {
+    test('calls async beforeSend and uses original event without any changes', (done) => {
       jest.useFakeTimers();
       expect.assertions(1);
       const beforeSend = jest.fn(
-        async event =>
-          new Promise<Event>(resolve => {
+        async (event) =>
+          new Promise<Event>((resolve) => {
             setTimeout(() => {
               resolve(event);
             }, 1);
@@ -735,12 +735,12 @@ describe('BaseClient', () => {
       jest.runOnlyPendingTimers();
     });
 
-    test('calls async beforeSend and uses the new one', done => {
+    test('calls async beforeSend and uses the new one', (done) => {
       jest.useFakeTimers();
       expect.assertions(1);
       const beforeSend = jest.fn(
         async () =>
-          new Promise<Event>(resolve => {
+          new Promise<Event>((resolve) => {
             setTimeout(() => {
               resolve({ message: 'changed2' });
             }, 1);
@@ -764,7 +764,7 @@ describe('BaseClient', () => {
       expect.assertions(1);
       const beforeSend = jest.fn(
         async () =>
-          new Promise<null>(resolve => {
+          new Promise<null>((resolve) => {
             setTimeout(() => {
               resolve(null);
             });
@@ -899,7 +899,7 @@ describe('BaseClient', () => {
       const spy = jest.spyOn(TestBackend.instance!, 'eventFromMessage');
       spy.mockImplementationOnce(
         (message, level) =>
-          new SyncPromise(resolve => {
+          new SyncPromise((resolve) => {
             setTimeout(() => resolve({ message, level }), 150);
           }),
       );

@@ -209,7 +209,7 @@ function startSessionTracking(): void {
 
   try {
     const po = new PerformanceObserver((entryList, po) => {
-      entryList.getEntries().forEach(entry => {
+      entryList.getEntries().forEach((entry) => {
         if (entry.name === 'first-contentful-paint' && entry.startTime < firstHiddenTime) {
           po.disconnect();
           fcpResolved = true;
@@ -223,7 +223,7 @@ function startSessionTracking(): void {
     let firstHiddenTime = document.visibilityState === 'hidden' ? 0 : Infinity;
     document.addEventListener(
       'visibilitychange',
-      event => {
+      (event) => {
         firstHiddenTime = Math.min(firstHiddenTime, event.timeStamp);
       },
       { once: true },

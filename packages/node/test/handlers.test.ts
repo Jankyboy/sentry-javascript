@@ -235,10 +235,7 @@ describe('tracingHandler', () => {
 
     sentryTracingMiddleware(req, res, next);
 
-    const transaction = sentryCore
-      .getCurrentHub()
-      .getScope()
-      ?.getTransaction();
+    const transaction = sentryCore.getCurrentHub().getScope()?.getTransaction();
 
     expect(transaction).toBeDefined();
     expect(transaction).toEqual(expect.objectContaining({ name: `GET ${urlString}`, op: 'http.server' }));
@@ -253,7 +250,7 @@ describe('tracingHandler', () => {
     expect(transaction).toEqual(expect.objectContaining({ name: `GET ${urlString}`, op: 'http.server' }));
   });
 
-  it('pulls status code from the response', done => {
+  it('pulls status code from the response', (done) => {
     const transaction = new Transaction({ name: 'mockTransaction' });
     jest.spyOn(sentryCore, 'startTransaction').mockReturnValue(transaction as Transaction);
     const finishTransaction = jest.spyOn(transaction, 'finish');
@@ -300,7 +297,7 @@ describe('tracingHandler', () => {
     expect(transaction?.name).toBe(`GET ${urlString}`);
   });
 
-  it('closes the transaction when request processing is done', done => {
+  it('closes the transaction when request processing is done', (done) => {
     const transaction = new Transaction({ name: 'mockTransaction' });
     jest.spyOn(sentryCore, 'startTransaction').mockReturnValue(transaction as Transaction);
     const finishTransaction = jest.spyOn(transaction, 'finish');
@@ -314,7 +311,7 @@ describe('tracingHandler', () => {
     });
   });
 
-  it('waits to finish transaction until all spans are finished, even though `transaction.finish()` is registered on `res.finish` event first', done => {
+  it('waits to finish transaction until all spans are finished, even though `transaction.finish()` is registered on `res.finish` event first', (done) => {
     const transaction = new Transaction({ name: 'mockTransaction', sampled: true });
     transaction.initSpanRecorder();
     const span = transaction.startChild({
@@ -326,7 +323,7 @@ describe('tracingHandler', () => {
     const finishTransaction = jest.spyOn(transaction, 'finish');
 
     let sentEvent: Event;
-    jest.spyOn((transaction as any)._hub, 'captureEvent').mockImplementation(event => {
+    jest.spyOn((transaction as any)._hub, 'captureEvent').mockImplementation((event) => {
       sentEvent = event as Event;
     });
 

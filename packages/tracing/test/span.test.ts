@@ -181,7 +181,7 @@ describe('Span', () => {
         const childSpanOne = transaction.startChild();
         childSpanOne.finish();
 
-        hub.configureScope(scope => {
+        hub.configureScope((scope) => {
           scope.setSpan(childSpanOne);
         });
 
@@ -239,7 +239,7 @@ describe('Span', () => {
 
         childSpanOne.finish();
 
-        hub.configureScope(scope => {
+        hub.configureScope((scope) => {
           scope.setSpan(transaction);
         });
 

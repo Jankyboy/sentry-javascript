@@ -10,7 +10,7 @@ import * as domain from 'domain';
  * @param integration Name of the serverless integration ('AWSLambda', 'GCPFunction', etc)
  */
 export function serverlessEventProcessor(integration: string): (event: Event) => Event {
-  return event => {
+  return (event) => {
     event.sdk = {
       ...event.sdk,
       name: 'sentry.javascript.serverless',

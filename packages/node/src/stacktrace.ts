@@ -30,7 +30,7 @@ export function parse(err: Error): StackFrame[] {
   const lines = err.stack.split('\n').slice(1);
 
   return lines
-    .map(line => {
+    .map((line) => {
       if (line.match(/^\s*[-]{4,}$/)) {
         return {
           columnNumber: null,
@@ -96,5 +96,5 @@ export function parse(err: Error): StackFrame[] {
 
       return properties;
     })
-    .filter(callSite => !!callSite) as StackFrame[];
+    .filter((callSite) => !!callSite) as StackFrame[];
 }

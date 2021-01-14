@@ -65,7 +65,7 @@ export function tracingHandler(): (
     });
 
     // We put the transaction on the scope so users can attach children to it
-    getCurrentHub().configureScope(scope => {
+    getCurrentHub().configureScope((scope) => {
       scope.setSpan(transaction);
     });
 
@@ -170,7 +170,7 @@ function extractUserData(
   const extractedUser: { [key: string]: any } = {};
   const attributes = Array.isArray(keys) ? keys : DEFAULT_USER_KEYS;
 
-  attributes.forEach(key => {
+  attributes.forEach((key) => {
     if (user && key in user) {
       extractedUser[key] = user[key];
     }
@@ -286,12 +286,12 @@ export function requestHandler(
     if (options && options.flushTimeout && options.flushTimeout > 0) {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       const _end = res.end;
-      res.end = function(chunk?: any | (() => void), encoding?: string | (() => void), cb?: () => void): void {
+      res.end = function (chunk?: any | (() => void), encoding?: string | (() => void), cb?: () => void): void {
         flush(options.flushTimeout)
           .then(() => {
             _end.call(this, chunk, encoding, cb);
           })
-          .then(null, e => {
+          .then(null, (e) => {
             logger.error(e);
           });
       };
@@ -301,7 +301,7 @@ export function requestHandler(
     local.add(res);
     local.on('error', next);
     local.run(() => {
-      getCurrentHub().configureScope(scope =>
+      getCurrentHub().configureScope((scope) =>
         scope.addEventProcessor((event: Event) => parseRequest(event, req, options)),
       );
       next();
@@ -357,7 +357,7 @@ export function errorHandler(options?: {
     const shouldHandleError = (options && options.shouldHandleError) || defaultShouldHandleError;
 
     if (shouldHandleError(error)) {
-      withScope(_scope => {
+      withScope((_scope) => {
         // For some reason we need to set the transaction on the scope again
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const transaction = (res as any).__sentry_transaction as Span;

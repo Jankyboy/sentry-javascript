@@ -41,13 +41,12 @@ async function collectPackages(cwd, packages = {}) {
   }
 
   await Promise.all(
-    Object.keys(packageJson.dependencies).map(async dep => {
+    Object.keys(packageJson.dependencies).map(async (dep) => {
       // We are interested only in 'external' dependencies which are strictly upper than current directory.
       // Internal deps aka local node_modules folder of each package is handled differently.
       const searchPath = path.resolve(cwd, '..');
       const depPath = fs.realpathSync(
-        await findUp(path.join('node_modules', dep),
-        { type: 'directory', cwd: searchPath })
+        await findUp(path.join('node_modules', dep), { type: 'directory', cwd: searchPath }),
       );
       if (packages[dep]) {
         if (packages[dep].cwd != depPath) {
@@ -87,7 +86,7 @@ async function main() {
       // Scan over the distributable files of the module and symlink each of them.
       const sourceFiles = await packList({ path: pkg.cwd });
       await Promise.all(
-        sourceFiles.map(async filename => {
+        sourceFiles.map(async (filename) => {
           const sourceFilename = path.resolve(pkg.cwd, filename);
           const destFilename = path.resolve(destPath, filename);
 
@@ -112,7 +111,7 @@ async function main() {
       // Scan over local node_modules folder of the package and symlink its non-dev dependencies.
       const sourceModules = fs.readdirSync(sourceModulesRoot);
       await Promise.all(
-        sourceModules.map(async sourceModule => {
+        sourceModules.map(async (sourceModule) => {
           if (!pkg.packageJson.dependencies || !pkg.packageJson.dependencies[sourceModule]) {
             return;
           }
@@ -146,7 +145,7 @@ async function main() {
   } catch (error) {
     // The child process timed out or had non-zero exit code.
     // The error contains the entire result from `childProcess.spawnSync`.
-    console.log(error);  // eslint-disable-line no-console
+    console.log(error); // eslint-disable-line no-console
   }
 }
 
@@ -154,7 +153,7 @@ main().then(
   () => {
     process.exit(0);
   },
-  err => {
+  (err) => {
     console.error(err); // eslint-disable-line no-console
     process.exit(-1);
   },

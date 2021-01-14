@@ -91,7 +91,7 @@ export class Angular implements Integration {
       const hub = this._getCurrentHub && this._getCurrentHub();
 
       if (hub && hub.getIntegration(Angular)) {
-        hub.withScope(scope => {
+        hub.withScope((scope) => {
           if (cause) {
             scope.setExtra('cause', cause);
           }

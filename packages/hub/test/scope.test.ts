@@ -161,7 +161,7 @@ describe('Scope', () => {
       scope.addBreadcrumb({ message: 'test' }, 100);
       scope.setContext('os', { id: '1' });
       const event: Event = {};
-      return scope.applyToEvent(event).then(processedEvent => {
+      return scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.extra).toEqual({ a: 2 });
         expect(processedEvent!.tags).toEqual({ a: 'b' });
         expect(processedEvent!.user).toEqual({ id: '1' });
@@ -190,7 +190,7 @@ describe('Scope', () => {
         tags: { b: 'c' },
         user: { id: '3' },
       };
-      return scope.applyToEvent(event).then(processedEvent => {
+      return scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.extra).toEqual({ a: 2, b: 3 });
         expect(processedEvent!.tags).toEqual({ a: 'b', b: 'c' });
         expect(processedEvent!.user).toEqual({ id: '3' });
@@ -211,13 +211,13 @@ describe('Scope', () => {
 
       // @ts-ignore we want to be able to assign string value
       event.fingerprint = 'foo';
-      await scope.applyToEvent(event).then(processedEvent => {
+      await scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.fingerprint).toEqual(['foo']);
       });
 
       // @ts-ignore we want to be able to assign string value
       event.fingerprint = 'bar';
-      await scope.applyToEvent(event).then(processedEvent => {
+      await scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.fingerprint).toEqual(['bar']);
       });
     });
@@ -229,7 +229,7 @@ describe('Scope', () => {
         fingerprint: ['bar'],
       };
 
-      await scope.applyToEvent(event).then(processedEvent => {
+      await scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.fingerprint).toEqual(['bar', 'foo']);
       });
     });
@@ -237,7 +237,7 @@ describe('Scope', () => {
     test('should remove default empty fingerprint array if theres no data available', async () => {
       const scope = new Scope();
       const event: Event = {};
-      await scope.applyToEvent(event).then(processedEvent => {
+      await scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.fingerprint).toEqual(undefined);
       });
     });
@@ -248,7 +248,7 @@ describe('Scope', () => {
       scope.setLevel(Severity.Warning);
       const event: Event = {};
       event.level = Severity.Critical;
-      return scope.applyToEvent(event).then(processedEvent => {
+      return scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.level).toEqual('warning');
       });
     });
@@ -259,7 +259,7 @@ describe('Scope', () => {
       scope.setTransactionName('/abc');
       const event: Event = {};
       event.transaction = '/cdf';
-      return scope.applyToEvent(event).then(processedEvent => {
+      return scope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent!.transaction).toEqual('/abc');
       });
     });
@@ -274,7 +274,7 @@ describe('Scope', () => {
     } as any;
     scope.setSpan(span);
     const event: Event = {};
-    return scope.applyToEvent(event).then(processedEvent => {
+    return scope.applyToEvent(event).then((processedEvent) => {
       expect((processedEvent!.contexts!.trace as any).a).toEqual('b');
     });
   });
@@ -292,7 +292,7 @@ describe('Scope', () => {
         trace: { a: 'c' },
       },
     };
-    return scope.applyToEvent(event).then(processedEvent => {
+    return scope.applyToEvent(event).then((processedEvent) => {
       expect((processedEvent!.contexts!.trace as any).a).toEqual('c');
     });
   });
@@ -308,7 +308,7 @@ describe('Scope', () => {
     transaction.transaction = transaction; // because this is a transaction, its transaction pointer points to itself
     scope.setSpan(transaction);
     const event: Event = {};
-    return scope.applyToEvent(event).then(processedEvent => {
+    return scope.applyToEvent(event).then((processedEvent) => {
       expect(processedEvent!.tags!.transaction).toEqual('fake transaction');
     });
   });
@@ -324,7 +324,7 @@ describe('Scope', () => {
     } as any;
     scope.setSpan(span);
     const event: Event = {};
-    return scope.applyToEvent(event).then(processedEvent => {
+    return scope.applyToEvent(event).then((processedEvent) => {
       expect(processedEvent!.tags!.transaction).toEqual('fake transaction');
     });
   });
@@ -377,8 +377,8 @@ describe('Scope', () => {
     test('given callback function, pass it the scope and returns original or modified scope', () => {
       const cb = jest
         .fn()
-        .mockImplementationOnce(v => v)
-        .mockImplementationOnce(v => {
+        .mockImplementationOnce((v) => v)
+        .mockImplementationOnce((v) => {
           v.setTag('foo', 'bar');
           return v;
         });
@@ -393,7 +393,7 @@ describe('Scope', () => {
     });
 
     test('given callback function, when it doesnt return instanceof Scope, ignore it and return original scope', () => {
-      const cb = jest.fn().mockImplementationOnce(_v => 'wat');
+      const cb = jest.fn().mockImplementationOnce((_v) => 'wat');
       const updatedScope = scope.update(cb);
       expect(cb).toHaveBeenCalledWith(scope);
       expect(updatedScope).toEqual(scope);
@@ -504,7 +504,7 @@ describe('Scope', () => {
         return processedEvent;
       });
 
-      return localScope.applyToEvent(event).then(final => {
+      return localScope.applyToEvent(event).then((final) => {
         expect(final!.dist).toEqual('1');
       });
     });
@@ -532,7 +532,7 @@ describe('Scope', () => {
         return processedEvent;
       });
 
-      return localScope.applyToEvent(event).then(final => {
+      return localScope.applyToEvent(event).then((final) => {
         expect(final!.dist).toEqual('1');
       });
     });
@@ -553,7 +553,7 @@ describe('Scope', () => {
       });
       localScope.addEventProcessor(
         async (processedEvent: Event) =>
-          new Promise<Event>(resolve => {
+          new Promise<Event>((resolve) => {
             callCounter(2);
             setTimeout(() => {
               callCounter(3);
@@ -568,7 +568,7 @@ describe('Scope', () => {
         return processedEvent;
       });
 
-      return localScope.applyToEvent(event).then(processedEvent => {
+      return localScope.applyToEvent(event).then((processedEvent) => {
         expect(callCounter.mock.calls[0][0]).toBe(1);
         expect(callCounter.mock.calls[1][0]).toBe(2);
         expect(callCounter.mock.calls[2][0]).toBe(3);
@@ -605,7 +605,7 @@ describe('Scope', () => {
         return processedEvent;
       });
 
-      return localScope.applyToEvent(event).then(null, reason => {
+      return localScope.applyToEvent(event).then(null, (reason) => {
         expect(reason).toEqual('bla');
       });
     });
@@ -618,7 +618,7 @@ describe('Scope', () => {
       const localScope = new Scope();
       localScope.setExtra('a', 'b');
       localScope.addEventProcessor(async (_: Event) => null);
-      return localScope.applyToEvent(event).then(processedEvent => {
+      return localScope.applyToEvent(event).then((processedEvent) => {
         expect(processedEvent).toBeNull();
       });
     });
@@ -635,7 +635,7 @@ describe('Scope', () => {
         expect(hint!.syntheticException).toBeTruthy();
         return internalEvent;
       });
-      return localScope.applyToEvent(event, { syntheticException: new Error('what') }).then(processedEvent => {
+      return localScope.applyToEvent(event, { syntheticException: new Error('what') }).then((processedEvent) => {
         expect(processedEvent).toEqual(event);
       });
     });

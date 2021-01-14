@@ -71,8 +71,8 @@ const ACTION_BREADCRUMB_TYPE = 'info';
 const STATE_CONTEXT_KEY = 'redux.state';
 
 const defaultOptions: SentryEnhancerOptions = {
-  actionTransformer: action => action,
-  stateTransformer: state => state || null,
+  actionTransformer: (action) => action,
+  stateTransformer: (state) => state || null,
 };
 
 /**
@@ -94,7 +94,7 @@ function createReduxEnhancer(enhancerOptions?: Partial<SentryEnhancerOptions>): 
     const sentryReducer: Reducer<S, A> = (state, action): S => {
       const newState = reducer(state, action);
 
-      configureScope(scope => {
+      configureScope((scope) => {
         /* Action breadcrumbs */
         const transformedAction = options.actionTransformer(action);
         if (typeof transformedAction !== 'undefined' && transformedAction !== null) {

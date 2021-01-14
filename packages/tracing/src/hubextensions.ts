@@ -148,7 +148,7 @@ function getDefaultSamplingContext(transactionContext: TransactionContext): Samp
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const requestType = nodeHttpModule.IncomingMessage;
 
-      const request = domain.members.find(member => isInstanceOf(member, requestType));
+      const request = domain.members.find((member) => isInstanceOf(member, requestType));
       if (request) {
         defaultSamplingContext.request = extractNodeRequestData(request);
       }

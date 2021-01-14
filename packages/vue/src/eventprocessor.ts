@@ -6,7 +6,7 @@ import { addGlobalEventProcessor, SDK_VERSION } from '@sentry/browser';
  * with it.
  */
 export function createVueEventProcessor(): void {
-  addGlobalEventProcessor(event => {
+  addGlobalEventProcessor((event) => {
     event.sdk = {
       ...event.sdk,
       name: 'sentry.javascript.vue',

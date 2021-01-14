@@ -31,9 +31,7 @@ describe('tracing', () => {
   }
 
   it("creates a span for each outgoing non-sentry request when there's a transaction on the scope", () => {
-    nock('http://dogs.are.great')
-      .get('/')
-      .reply(200);
+    nock('http://dogs.are.great').get('/').reply(200);
 
     const transaction = createTransactionOnScope();
     const spans = (transaction as Span).spanRecorder?.spans as Span[];
@@ -50,9 +48,7 @@ describe('tracing', () => {
   });
 
   it("doesn't create a span for outgoing sentry requests", () => {
-    nock('http://squirrelchasers.ingest.sentry.io')
-      .get('/api/12312012/store/')
-      .reply(200);
+    nock('http://squirrelchasers.ingest.sentry.io').get('/api/12312012/store/').reply(200);
 
     const transaction = createTransactionOnScope();
     const spans = (transaction as Span).spanRecorder?.spans as Span[];
@@ -65,9 +61,7 @@ describe('tracing', () => {
   });
 
   it('attaches the sentry-trace header to outgoing non-sentry requests', async () => {
-    nock('http://dogs.are.great')
-      .get('/')
-      .reply(200);
+    nock('http://dogs.are.great').get('/').reply(200);
 
     createTransactionOnScope();
 
@@ -79,9 +73,7 @@ describe('tracing', () => {
   });
 
   it("doesn't attach the sentry-trace header to outgoing sentry requests", () => {
-    nock('http://squirrelchasers.ingest.sentry.io')
-      .get('/api/12312012/store/')
-      .reply(200);
+    nock('http://squirrelchasers.ingest.sentry.io').get('/api/12312012/store/').reply(200);
 
     createTransactionOnScope();
 

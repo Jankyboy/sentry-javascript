@@ -17,7 +17,7 @@ export function wrapEventFunction(
   fn: EventFunction | EventFunctionWithCallback,
   wrapOptions: Partial<EventFunctionWrapperOptions> = {},
 ): EventFunctionWithCallback {
-  return proxyFunction(fn, f => domainify(_wrapEventFunction(f, wrapOptions)));
+  return proxyFunction(fn, (f) => domainify(_wrapEventFunction(f, wrapOptions)));
 }
 
 /** */
@@ -38,7 +38,7 @@ function _wrapEventFunction(
     // getCurrentHub() is expected to use current active domain as a carrier
     // since functions-framework creates a domain for each incoming request.
     // So adding of event processors every time should not lead to memory bloat.
-    getCurrentHub().configureScope(scope => {
+    getCurrentHub().configureScope((scope) => {
       configureScopeWithContext(scope, context);
       // We put the transaction on the scope so users can attach children to it
       scope.setSpan(transaction);
@@ -58,7 +58,7 @@ function _wrapEventFunction(
         .then(() => {
           callback(...args);
         })
-        .then(null, e => {
+        .then(null, (e) => {
           logger.error(e);
         });
     });
@@ -70,10 +70,10 @@ function _wrapEventFunction(
     Promise.resolve()
       .then(() => (fn as EventFunction)(data, context))
       .then(
-        result => {
+        (result) => {
           newCallback(null, result);
         },
-        err => {
+        (err) => {
           newCallback(err, undefined);
         },
       );

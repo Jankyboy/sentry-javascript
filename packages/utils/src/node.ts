@@ -75,7 +75,7 @@ export function extractNodeRequestData(
   // absolute url
   const absoluteUrl = `${protocol}://${host}${originalUrl}`;
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     switch (key) {
       case 'headers':
         requestData.headers = headers;

@@ -63,8 +63,8 @@ describe('patchOperation()', () => {
     jest.spyOn(childSpan, 'finish');
   });
 
-  it('should wrap method accepting callback as the last argument', done => {
-    collection.insertOne(doc, {}, function() {
+  it('should wrap method accepting callback as the last argument', (done) => {
+    collection.insertOne(doc, {}, function () {
       expect(scope.getSpan).toBeCalled();
       expect(parentSpan.startChild).toBeCalledWith({
         data: {

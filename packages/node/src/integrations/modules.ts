@@ -26,7 +26,7 @@ function collectModules(): {
     [path: string]: boolean;
   } = {};
 
-  paths.forEach(path => {
+  paths.forEach((path) => {
     let dir = path;
 
     /** Traverse directories upward in the search of package.json file */
@@ -81,7 +81,7 @@ export class Modules implements Integration {
    * @inheritDoc
    */
   public setupOnce(addGlobalEventProcessor: (callback: EventProcessor) => void, getCurrentHub: () => Hub): void {
-    addGlobalEventProcessor(event => {
+    addGlobalEventProcessor((event) => {
       if (!getCurrentHub().getIntegration(Modules)) {
         return event;
       }

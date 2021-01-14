@@ -23,7 +23,7 @@ export function vueRouterInstrumentation(router: VueRouter): VueRouterInstrument
     startTransactionOnPageLoad: boolean = true,
     startTransactionOnLocationChange: boolean = true,
   ) => {
-    router.onError(error => captureException(error));
+    router.onError((error) => captureException(error));
 
     const tags = {
       'routing.instrumentation': 'vue-router',

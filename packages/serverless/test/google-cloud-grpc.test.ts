@@ -49,7 +49,7 @@ class FakeSession extends EventEmitter {
     return stream;
   }
   mockUnaryRequest(responseData: Buffer) {
-    this.mockRequest(stream => {
+    this.mockRequest((stream) => {
       stream.emit(
         'response',
         { ':status': 200, 'content-type': 'application/grpc', 'content-disposition': 'attachment' },
@@ -82,9 +82,7 @@ describe('GoogleCloudGrpc', () => {
   });
 
   beforeEach(() => {
-    nock('https://www.googleapis.com')
-      .post('/oauth2/v4/token')
-      .reply(200, []);
+    nock('https://www.googleapis.com').post('/oauth2/v4/token').reply(200, []);
   });
   afterEach(() => {
     // @ts-ignore see "Why @ts-ignore" note

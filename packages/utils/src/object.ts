@@ -52,7 +52,7 @@ export function fill(source: { [key: string]: any }, name: string, replacementFa
  */
 export function urlEncode(object: { [key: string]: any }): string {
   return Object.keys(object)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`)
     .join('&');
 }
 

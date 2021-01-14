@@ -424,7 +424,7 @@ export class Scope implements ScopeInterface {
         const result = processor({ ...event }, hint) as Event | null;
         if (isThenable(result)) {
           (result as PromiseLike<Event | null>)
-            .then(final => this._notifyEventProcessors(processors, final, hint, index + 1).then(resolve))
+            .then((final) => this._notifyEventProcessors(processors, final, hint, index + 1).then(resolve))
             .then(null, reject);
         } else {
           this._notifyEventProcessors(processors, result, hint, index + 1)
@@ -444,7 +444,7 @@ export class Scope implements ScopeInterface {
     // during the callback.
     if (!this._notifyingListeners) {
       this._notifyingListeners = true;
-      this._scopeListeners.forEach(callback => {
+      this._scopeListeners.forEach((callback) => {
         callback(this);
       });
       this._notifyingListeners = false;

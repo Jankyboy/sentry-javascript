@@ -57,7 +57,7 @@ export function reactRouterV3Instrumentation(
     }
 
     if (startTransactionOnLocationChange && history.listen) {
-      history.listen(location => {
+      history.listen((location) => {
         if (location.action === 'PUSH' || location.action === 'POP') {
           if (activeTransaction) {
             activeTransaction.finish();

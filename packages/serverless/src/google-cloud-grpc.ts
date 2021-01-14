@@ -64,7 +64,7 @@ export class GoogleCloudGrpc implements Integration {
 
 /** Returns a wrapped function that returns a stub with tracing enabled */
 function wrapCreateStub(origCreate: CreateStubFunc): CreateStubFunc {
-  return async function(this: unknown, ...args: Parameters<CreateStubFunc>) {
+  return async function (this: unknown, ...args: Parameters<CreateStubFunc>) {
     const servicePath = args[1]?.servicePath;
     if (servicePath == null || servicePath == undefined) {
       return origCreate.apply(this, args);

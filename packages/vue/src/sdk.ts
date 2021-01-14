@@ -307,7 +307,7 @@ class VueHelper {
     };
 
     // Each component has it's own scope, so all activities are only related to one of them
-    this._options.tracingOptions.hooks.forEach(operation => {
+    this._options.tracingOptions.hooks.forEach((operation) => {
       // Retrieve corresponding hooks from Vue lifecycle.
       // eg. mount => ['beforeMount', 'mounted']
       const internalHooks = HOOKS[operation];
@@ -317,7 +317,7 @@ class VueHelper {
         return;
       }
 
-      internalHooks.forEach(internalHook => {
+      internalHooks.forEach((internalHook) => {
         const handler = rootMount
           ? rootHandler.bind(this, internalHook)
           : childHandler.bind(this, internalHook, operation);
@@ -389,7 +389,7 @@ class VueHelper {
 
       // Capture exception in the next event loop, to make sure that all breadcrumbs are recorded in time.
       setTimeout(() => {
-        getCurrentHub().withScope(scope => {
+        getCurrentHub().withScope((scope) => {
           scope.setContext('vue', metadata);
           getCurrentHub().captureException(error);
         });
@@ -412,7 +412,5 @@ class VueHelper {
 
 /** Grabs active transaction off scope, if any */
 export function getActiveTransaction(): Transaction | undefined {
-  return getCurrentHub()
-    .getScope()
-    ?.getTransaction();
+  return getCurrentHub().getScope()?.getTransaction();
 }

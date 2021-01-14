@@ -143,9 +143,7 @@ export function fetchCallback(
   shouldCreateSpan: (url: string) => boolean,
   spans: Record<string, Span>,
 ): void {
-  const currentClientOptions = getCurrentHub()
-    .getClient()
-    ?.getOptions();
+  const currentClientOptions = getCurrentHub().getClient()?.getOptions();
   if (
     !(currentClientOptions && hasTracingEnabled(currentClientOptions)) ||
     !(handlerData.fetchData && shouldCreateSpan(handlerData.fetchData.url))
@@ -216,9 +214,7 @@ export function xhrCallback(
   shouldCreateSpan: (url: string) => boolean,
   spans: Record<string, Span>,
 ): void {
-  const currentClientOptions = getCurrentHub()
-    .getClient()
-    ?.getOptions();
+  const currentClientOptions = getCurrentHub().getClient()?.getOptions();
   if (
     !(currentClientOptions && hasTracingEnabled(currentClientOptions)) ||
     !(handlerData.xhr && handlerData.xhr.__sentry_xhr__ && shouldCreateSpan(handlerData.xhr.__sentry_xhr__.url)) ||

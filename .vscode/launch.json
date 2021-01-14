@@ -26,7 +26,7 @@
       "sourceMaps": true,
       "smartStep": true,
       "console": "integratedTerminal", // otherwise it goes to the VSCode debug terminal, which can't read from stdin
-      "internalConsoleOptions": "neverOpen", // since we're not using it, don't automatically switch to it
+      "internalConsoleOptions": "neverOpen" // since we're not using it, don't automatically switch to it
     },
 
     // @sentry/node - run a specific test file in watch mode
@@ -50,7 +50,7 @@
       "sourceMaps": true,
       "smartStep": true,
       "console": "integratedTerminal", // otherwise it goes to the VSCode debug terminal, which can't read from stdin
-      "internalConsoleOptions": "neverOpen", // since we're not using it, don't automatically switch to it
+      "internalConsoleOptions": "neverOpen" // since we're not using it, don't automatically switch to it
     },
 
     // @sentry/core - run a specific test file in watch mode
@@ -74,7 +74,7 @@
       "sourceMaps": true,
       "smartStep": true,
       "console": "integratedTerminal", // otherwise it goes to the VSCode debug terminal, which can't read from stdin
-      "internalConsoleOptions": "neverOpen", // since we're not using it, don't automatically switch to it
+      "internalConsoleOptions": "neverOpen" // since we're not using it, don't automatically switch to it
     },
 
     // @sentry/utils - run a specific test file in watch mode
@@ -98,7 +98,7 @@
       "sourceMaps": true,
       "smartStep": true,
       "console": "integratedTerminal", // otherwise it goes to the VSCode debug terminal, which can't read from stdin
-      "internalConsoleOptions": "neverOpen", // since we're not using it, don't automatically switch to it
-    },
+      "internalConsoleOptions": "neverOpen" // since we're not using it, don't automatically switch to it
+    }
   ]
 }

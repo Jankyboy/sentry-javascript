@@ -61,7 +61,7 @@ export function _instrumentEmberRouter(
     });
   }
 
-  const finishActiveTransaction = function(_: any, nextInstance: any) {
+  const finishActiveTransaction = function (_: any, nextInstance: any) {
     if (nextInstance) {
       return;
     }
@@ -135,7 +135,7 @@ function _instrumentEmberRunloop(config: typeof environmentConfig['@sentry/ember
     }
     currentQueueStart = timestampWithMs();
 
-    instrumentedEmberQueues.forEach(queue => {
+    instrumentedEmberQueues.forEach((queue) => {
       run.scheduleOnce(queue, null, () => {
         run.scheduleOnce(queue, null, () => {
           // Process this queue using the end of the previous queue.
